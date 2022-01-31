@@ -2,7 +2,7 @@ const allProductsQuery = `
 query {
   products (
     search: ""
-    pageSize: 10000
+    pageSize: 300
   ) {
     items {
       id

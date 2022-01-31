@@ -31,7 +31,9 @@ const createProductNodes = (
             const {
                 data: { products: { items = [] } = {} } = {},
                 errors,
-            } = await rawRequest(graphqlEndpoint, query);
+            } = await rawRequest(graphqlEndpoint, query, {
+                Store: process.env.MAGENTO_STORE_VIEW
+            });
 
             products = items;
             logErrors(errors);

@@ -57,7 +57,7 @@ const createCategoryNodes = (
                 touchNode,
                 bar,
             },
-            2,
+            process.env.MAGENTO_ROOT_CATEGORY,
             productMap
         );
 
@@ -89,6 +89,8 @@ async function fetchCategories(context, rootId, productMap) {
         if (!res) {
             res = await client.request(query, {
                 id: rootId,
+            }, {
+                Store: process.env.MAGENTO_STORE_VIEW
             });
 
             cache.set(categoryCacheKey, res);

@@ -1,7 +1,7 @@
 import createProductNodes from './products.js';
 import createCategoryNodes from './categories.js';
 import createStoreNode from './storeConfig.js';
-import createCmsBlockNodes from './cmsBlocks.js';
+// import createCmsBlockNodes from './cmsBlocks.js';
 import watchForUpdates from './watchForUpdates';
 
 export default async function createMagentoNodes(params, options) {
