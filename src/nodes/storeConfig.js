@@ -4,10 +4,10 @@ import crypto from 'crypto';
 
 const createStoreNode = (
     { createNode, createPage, createNodeId, store, cache, reporter, auth },
-    { graphqlEndpoint }
+    { graphqlEndpoint, storeViewName = 'default' }
 ) => {
     return new Promise(async (resolve, reject) => {
-        const client = new GraphQLClient(graphqlEndpoint, {});
+        const client = new GraphQLClient(graphqlEndpoint, { headers: { Store: storeViewName } });
 
         try {
             const config = await client.request(storeConfigQuery);

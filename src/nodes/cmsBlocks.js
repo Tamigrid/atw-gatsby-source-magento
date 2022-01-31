@@ -5,7 +5,7 @@ import crypto from 'crypto';
 
 const createCmsBlockNodes = (
     { createNode, createPage, createNodeId, store, cache, reporter, auth },
-    { graphqlEndpoint, storeConfig, queries },
+    { graphqlEndpoint, storeConfig, queries, storeViewName = 'default' },
     indexMap
 ) => {
     if (!storeConfig) {
@@ -26,7 +26,7 @@ const createCmsBlockNodes = (
     activity.start();
 
     return new Promise(async (resolve, reject) => {
-        const client = new GraphQLClient(graphqlEndpoint, {});
+        const client = new GraphQLClient(graphqlEndpoint, { headers: { Store: storeViewName } });
 
         await fetchCMSBlocks(
             {

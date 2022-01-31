@@ -5,7 +5,7 @@ import { downloadNodeImages } from "./images";
 
 const createProductNodes = (
     context,
-    { graphqlEndpoint, storeConfig, queries },
+    { graphqlEndpoint, storeConfig, queries, storeViewName = 'default' },
     importMaps
 ) => {
     const { reporter } = context;
@@ -32,7 +32,7 @@ const createProductNodes = (
                 data: { products: { items = [] } = {} } = {},
                 errors,
             } = await rawRequest(graphqlEndpoint, query, {
-                Store: process.env.MAGENTO_STORE_VIEW
+                Store: storeViewName
             });
 
             products = items;

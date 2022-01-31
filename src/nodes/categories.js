@@ -14,7 +14,7 @@ const createCategoryNodes = (
         auth,
         touchNode,
     },
-    { graphqlEndpoint, storeConfig, queries },
+    { graphqlEndpoint, storeConfig, queries, rootCategoryId, storeViewName = 'default' },
     productMap
 ) => {
     if (!storeConfig) {
@@ -35,10 +35,12 @@ const createCategoryNodes = (
     activity.start();
 
     return new Promise(async (resolve, reject) => {
-        const client = new GraphQLClient(graphqlEndpoint, {});
+        const client = new GraphQLClient(graphqlEndpoint, { headers: { Store: storeViewName } });
 
         const bar = reporter.createProgress('Downloading category images');
         bar.start();
+
+        const rootId = rootCategoryId ? rootCategoryId : 2;
 
         await fetchCategories(
             {
@@ -57,7 +59,7 @@ const createCategoryNodes = (
                 touchNode,
                 bar,
             },
-            process.env.MAGENTO_ROOT_CATEGORY,
+            rootId,
             productMap
         );
 
@@ -89,8 +91,6 @@ async function fetchCategories(context, rootId, productMap) {
         if (!res) {
             res = await client.request(query, {
                 id: rootId,
-            }, {
-                Store: process.env.MAGENTO_STORE_VIEW
             });
 
             cache.set(categoryCacheKey, res);
